@@ -10,6 +10,10 @@ RUN yum install --quiet --assumeyes java-headless confluent-kafka-${SCALA_VERSIO
 
 EXPOSE 9092
 
+VOLUME /data
+
+COPY kafka.properties /etc/kafka/kafka.properties
+
 COPY onStart.sh /onStart.sh
 
 ENTRYPOINT ["/onStart.sh"]
