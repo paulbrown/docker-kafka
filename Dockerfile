@@ -34,7 +34,8 @@ RUN set -x pipefail \
   && groupadd --gid 1000 $KAFKA_USER \
   && useradd --uid 1000 --gid $KAFKA_USER --home $KAFKA_HOME $KAFKA_USER \
   && ln -s -t $KAFKA_HOME /opt/$KAFKA_DIST/* $KAFKA_DATA_DIR $KAFKA_LOG_DIR \
-  && chown -R -L "$KAFKA_USER:$KAFKA_USER" $KAFKA_HOME
+  && chown -R -L "$KAFKA_USER:$KAFKA_USER" $KAFKA_HOME \
+  && chmod +x "$KAFKA_HOME/bin/kafkaGenConfig.sh"
 
 # Set working directory to kafka home
 WORKDIR $KAFKA_HOME
