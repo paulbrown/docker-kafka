@@ -58,7 +58,7 @@ function create_config() {
     echo "log.dir=$KAFKA_DATA_DIR" >> $KAFKA_CONFIG
 
     echo "# Zookeeper" >> $KAFKA_CONFIG
-    echo "zookeeper.connect=zk-0.$DOMAIN:2181,zk-1.$DOMAIN:2181,zk-2.$DOMAIN:2181 " >> $KAFKA_CONFIG
+    echo "zookeeper.connect=zk-0.zk.default.svc.cluster.local:2181,zk-1.zk.default.svc.cluster.local:2181,zk-2.zk.default.svc.cluster.local:2181" >> $KAFKA_CONFIG
 
     echo "Wrote Kafka configuration file to $KAFKA_CONFIG"
 }
