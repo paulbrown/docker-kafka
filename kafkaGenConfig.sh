@@ -18,11 +18,11 @@ DOMAIN=$(hostname -d)
 
 # Environment variables used as part of application startup script
 KAFKA_HEAP_OPTS="-Xmx$KAFKA_HEAP_SIZE -Xms$KAFKA_HEAP_SIZE"
-KAFKA_LOG4J_OPTS=$((LOG4J_PROPS))
+KAFKA_LOG4J_OPTS=$LOG4J_PROPS
 # $KAFKA_JVM_PERFORMANCE_OPTS 
 # $KAFKA_GC_LOG_OPTS 
 # $KAFKA_JMX_OPTS 
-LOG_DIR=$((KAFKA_LOG_DIR))
+LOG_DIR=$KAFKA_LOG_DIR
 
 function validate_env() {
     echo "Validating environment"
@@ -39,7 +39,7 @@ function validate_env() {
         exit 1
     fi
 
-    MY_ID=$((ORD))
+    MY_ID=$ORD
     env
     echo "Environment validation successful"
 }
