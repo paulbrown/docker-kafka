@@ -1,0 +1,53 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: kafka-svc
+  labels:
+    app: kafka
+spec:
+  ports:
+  - port: 9093
+    name: server
+  clusterIP: None
+  selector:
+    app: kafka
+---
+kind: StatefulSet
+apiVersion: apps/v1beta1
+metadata:
+  name: kafka
+spec:
+  serviceName: kafka
+  replicas: 3
+  template:
+    metadata:
+      labels:
+        app: kafka
+    spec:
+      securityContext:
+        runAsUser: 1000
+        fsGroup: 1000
+      containers:
+      - name: kafka
+        image: paulbrown/kafka:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9093
+          name: server
+        volumeMounts:
+        - name: data
+          mountPath: /kafka_data
+        command:
+        - sh
+        - -c
+        - bin/kafkaGenConfig.sh && bin/kafka-server-start.sh config/kafka.properties
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: 
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 1Gi
+      storageClassName: standard
